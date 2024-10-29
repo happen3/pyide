@@ -50,7 +50,7 @@ class PythonHighlighter(QSyntaxHighlighter):
             (r'def\s+([a-zA-Z_][a-zA-Z0-9_]*)', self.obj_name),
             (r'class\s+([^\s(]+)', self.obj_name),
             (r'\b(?:self|__init__|super|__get__|__set__|__getattr__|__setattr__|__call__|__dict__|__str__|__repr__|__name__)\b', self.sp),
-            (r"(?<!\\)'(?:[^\n']|\\')*(?<!\\)'|(?<!\\)\"(?:[^\n\"]|\\\")*(?<!\\)\"", self.string_format),  # Matches b'', f'', rf'', rb'' (single quotes)
+            (r"(?<!\\)'(?:[^\n']|\\')*(?<!\\)'|(?<!\\)\"(?:[^\n\"]|\\\")*(?<!\\)\"", self.string_format),
         ]
     def highlightBlock(self, text):
         for pattern, fmt in self.highlighting_rules:
