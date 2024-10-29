@@ -48,7 +48,7 @@ class PythonHighlighter(QSyntaxHighlighter):
 
         self.highlighting_rules = [
             (r'\b(?:int|str|list|dict|tuple|bool|float|None|object)\b', self.type),
-            (r'\b(?:def|pass|class|if|else|elif|for|del|while|return|True|False|import|from|as|with|try|except|finally|raise|in|is|lambda)\b', self.keyword_format),
+            (r'\b(?:def|pass|class|if|else|elif|for|del|break|while|return|True|False|import|from|as|with|try|except|finally|raise|in|is|lambda)\b', self.keyword_format),
             (r'#.*', self.comment_format),
             (r'\b(?:print|type|isinstance|set)\b', self.function_form),
             (r'\b\d+(\.\d+)?\b', self.num),
