@@ -1,0 +1,8 @@
+QTextEdit {
+    background-color: #0e0e0e;
+    color: white;
+    font-family: "JetBrains Mono", "Source Code Pro", monospace, arial, sans-serif;
+    selection-background-color: #3d62d7;
+    selection-color: #efe3e3;
+    font-size: 13px;
+}

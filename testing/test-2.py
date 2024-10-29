@@ -1,0 +1,2 @@
+def ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_1234567890:
+    pass
