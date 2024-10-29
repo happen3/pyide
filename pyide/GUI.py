@@ -78,6 +78,9 @@ class CodeBox(QTextEdit):
             super().keyPressEvent(event)
 
 class MyMainWindow(QMainWindow):
+    def about(self):
+        QMessageBox.about(self, 'About Pyide', f'''Pyide IDE\nVersion {self.version}''')
+
     def saveas(self):
         # Open the save file dialog
         file_path, _ = QFileDialog.getSaveFileName(None, "Save File", "", "Python files (*.py *pyw *.pyi);;All files (*)")
@@ -86,12 +89,16 @@ class MyMainWindow(QMainWindow):
                 # Open the selected file and write the content of the QTextEdit
                 with open(file_path, 'w') as f:
                     f.write(self.code_box.toPlainText())  # Save the text from the QTextEdit
+                    self.file_set(os.path.split(file_path)[-1], file_path)
             except Exception as e:
                 QMessageBox.critical(None, "Error", "Could not save the file.")
     def save(self):
         # Open the save file dialog
-        file_path = self.full_path if self.full_path else True
-        if file_path: return self.saveas()
+        if self.full_path:
+            file_path = self.full_path
+        else:
+            self.saveas()
+            return
         if file_path:  # Check if a file path was selected
             try:
                 # Open the selected file and write the content of the QTextEdit
@@ -122,6 +129,7 @@ class MyMainWindow(QMainWindow):
 
         # Set up the main window
         self.full_path = None
+        self.version = "v0.1.0-alpha"
         self.setWindowTitle("Pyide")
         self.setGeometry(100, 100, 600, 400)
         self.current_file = "Untitled"
@@ -155,6 +163,11 @@ class MyMainWindow(QMainWindow):
 
         # Create a File menu
         file_menu = menu_bar.addMenu("File")
+        help_menu = menu_bar.addMenu("Help")
+
+        about_action = QAction("About", self)
+        about_action.triggered.connect(self.about)
+        help_menu.addAction(about_action)
 
         new_action = QAction("New", self)
         new_action.setShortcut("Ctrl+N")
@@ -181,6 +194,7 @@ class MyMainWindow(QMainWindow):
 
         # Create an action for exiting the application
         exit_action = QAction("Exit", self)
+        exit_action.setShortcut("Ctrl+X")
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
 
