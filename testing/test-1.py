@@ -5,6 +5,12 @@ class Test:
         print(f'Hello, {self.name}!')
     def bye(self):
         print("Bye, " + self.name)
+    def is_lie(self, lie: bool):
+        if lie:
+            print("You're lying!")
+        else:
+            print("You're not lying!")
+        print("L" if lie == True else "T")
 
 if __name__ == "__main__":
     MyTest = Test('World')

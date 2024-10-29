@@ -42,8 +42,13 @@ class PythonHighlighter(QSyntaxHighlighter):
         self.num = QTextCharFormat()
         self.num.setForeground(QColor("cyan"))
 
+        self.type = QTextCharFormat()
+        self.type.setForeground(QColor("yellow"))
+        self.type.font().setBold(True)
+
         self.highlighting_rules = [
-            (r'\b(?:def|pass|class|if|else|elif|for|del|while|return|import|from|as|with|try|except|finally|raise|in|is|lambda)\b', self.keyword_format),
+            (r'\b(?:int|str|list|dict|tuple|bool|float|None|object)\b', self.type),
+            (r'\b(?:def|pass|class|if|else|elif|for|del|while|return|True|False|import|from|as|with|try|except|finally|raise|in|is|lambda)\b', self.keyword_format),
             (r'#.*', self.comment_format),
             (r'\b(?:print|type|isinstance|set)\b', self.function_form),
             (r'\b\d+(\.\d+)?\b', self.num),
@@ -70,6 +75,12 @@ class CodeBox(QTextEdit):
             return  # Prevent the default tab action
         elif event.key() == QtCore.Qt.Key_Return:
             if self.toPlainText().strip().endswith(':'):
+                self.insertPlainText('\n    ')
+            elif self.toPlainText().strip().endswith('('):
+                self.insertPlainText('\n    ')
+            elif self.toPlainText().strip().endswith('['):
+                self.insertPlainText('\n    ')
+            elif self.toPlainText().strip().endswith('{'):
                 self.insertPlainText('\n    ')
             else:
                 super().keyPressEvent(event)
@@ -114,7 +125,7 @@ class MyMainWindow(QMainWindow):
                 # Open the selected file and write the content of the QTextEdit
                 with open(file_path, 'r') as f:
                     self.code_box.setPlainText(f.read())  # Save the text from the QTextEdit
-                    self.file_set(os.path.split(file_path)[-1])
+                    self.file_set(os.path.split(file_path)[-1], file_path)
             except Exception as e:
                 QMessageBox.critical(None, "Error", "Could not open the file.")
     def file_set(self, file_name, full_path=None):
